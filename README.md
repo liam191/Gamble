@@ -64,5 +64,5 @@ gamble/
 
 - **[Game Rules](docs/GAMES.md)** — 7개 게임별 규칙, 확률, 배당, 플레이 방법
 - **[Fairness & Security](docs/FAIRNESS.md)** — Commit-reveal 공정성 모델, 서명 검증, 사후 검증 방법
-- **[Backend Spec](backend/SPEC.md)** — API, 상태머신, Redis, 정산 로직, 복구
-- **[Frontend Spec](frontend/SPEC.md)** — 컴포넌트 구조, 게임 UI, 체인 연동
+- **[Backend Spec](backend/README.md)** — API, 상태머신, Redis, 정산 로직, 복구
+- **[Frontend Spec](frontend/README.md)** — 컴포넌트 구조, 게임 UI, 체인 연동
