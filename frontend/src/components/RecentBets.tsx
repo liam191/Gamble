@@ -57,18 +57,19 @@ export function RecentBets() {
     <div className="overflow-x-auto">
       <table style={{ width: '100%', fontSize: '0.8125rem', borderCollapse: 'collapse' }}>
         <thead>
-          <tr style={{ borderBottom: '1px solid var(--surface-3)' }}>
+          <tr style={{ borderBottom: '1px solid var(--surface-4)' }}>
             {['Game', 'Result', 'Bet', 'Payout', ''].map((h) => (
               <th
                 key={h}
                 style={{
                   padding: 'var(--space-3) var(--space-3)',
                   textAlign: h === 'Bet' || h === 'Payout' ? 'right' : 'left',
-                  color: 'var(--text-muted)',
-                  fontWeight: 600,
-                  fontSize: '0.75rem',
+                  color: 'var(--accent-gold-dim)',
+                  fontWeight: 700,
+                  fontSize: '0.6875rem',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
+                  letterSpacing: '0.08em',
+                  fontFamily: 'var(--font-heading)',
                 }}
               >
                 {h}

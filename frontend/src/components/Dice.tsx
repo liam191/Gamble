@@ -49,14 +49,16 @@ export function Dice({ mask, onMaskChange, result, isLocked, isRolling }: Props)
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: isSelected ? 'var(--win)' : 'var(--surface-3)',
+                background: isSelected
+                  ? 'linear-gradient(180deg, var(--win) 0%, var(--win-dim) 100%)'
+                  : 'linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%)',
                 color: isSelected ? 'oklch(15% 0.02 155)' : 'var(--text-primary)',
-                border: isSelected ? 'none' : '1px solid var(--surface-4)',
+                border: isSelected ? '2px solid oklch(100% 0 0 / 0.15)' : '1px solid var(--surface-4)',
                 cursor: isLocked ? 'not-allowed' : 'pointer',
                 opacity: isLocked ? 0.5 : 1,
                 transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
                 transform: isSelected ? 'scale(1.08)' : 'scale(1)',
-                boxShadow: isSelected ? '0 4px 16px oklch(72% 0.18 155 / 0.3)' : 'none',
+                boxShadow: isSelected ? '0 4px 20px oklch(72% 0.18 155 / 0.35)' : 'var(--shadow-inset)',
               }}
             >
               {face}

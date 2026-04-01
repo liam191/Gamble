@@ -121,9 +121,9 @@ export function DragonTiger({ selected, onSelect, result, commitHash, isLocked, 
     : null
 
   const betOptions = [
-    { mask: DRAGON_MASK, label: '🐉 Dragon', sub: '2.08x', activeBg: 'oklch(50% 0.18 25)' },
-    { mask: TIE_MASK, label: '🤝 Tie', sub: '12.48x', activeBg: 'var(--win)' },
-    { mask: TIGER_MASK, label: '🐯 Tiger', sub: '2.08x', activeBg: 'var(--action)' },
+    { mask: DRAGON_MASK, label: '🐉 Dragon', sub: '2.08x', activeBg: 'linear-gradient(180deg, oklch(55% 0.2 25) 0%, oklch(45% 0.18 25) 100%)' },
+    { mask: TIE_MASK, label: '🤝 Tie', sub: '12.48x', activeBg: 'linear-gradient(180deg, var(--win) 0%, var(--win-dim) 100%)' },
+    { mask: TIGER_MASK, label: '🐯 Tiger', sub: '2.08x', activeBg: 'linear-gradient(180deg, var(--action-hover) 0%, var(--action) 100%)' },
   ]
 
   return (

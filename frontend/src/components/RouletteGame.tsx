@@ -37,8 +37,8 @@ function RouletteWheel({ result, isRolling }: { result: number | null; isRolling
         ref={wheelRef}
         className="w-full h-full rounded-full overflow-hidden"
         style={{
-          border: '3px solid var(--accent-gold-dim)',
-          boxShadow: '0 0 20px oklch(78% 0.16 85 / 0.15), inset 0 0 20px oklch(0% 0 0 / 0.3)',
+          border: '4px solid var(--accent-gold)',
+          boxShadow: '0 0 24px oklch(78% 0.16 85 / 0.25), inset 0 0 24px oklch(0% 0 0 / 0.4), 0 0 0 2px var(--accent-gold-dim)',
           transform: `rotate(${rotation}deg)`,
           transition: isRolling
             ? 'transform 2s linear'

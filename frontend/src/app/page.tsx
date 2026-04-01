@@ -13,11 +13,11 @@ export default function Home() {
             <h2
               className="font-heading"
               style={{
-                fontSize: '0.875rem',
-                fontWeight: 600,
-                color: 'var(--text-muted)',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                color: 'var(--accent-gold-dim)',
                 textTransform: 'uppercase' as const,
-                letterSpacing: '0.08em',
+                letterSpacing: '0.1em',
                 marginBottom: 'var(--space-3)',
               }}
             >
@@ -25,10 +25,11 @@ export default function Home() {
             </h2>
             <div
               style={{
-                background: 'var(--surface-1)',
+                background: 'linear-gradient(180deg, var(--surface-2) 0%, var(--surface-1) 100%)',
                 borderRadius: 'var(--radius-lg)',
-                border: '1px solid var(--surface-3)',
+                border: '1px solid var(--surface-4)',
                 overflow: 'hidden',
+                boxShadow: 'var(--shadow-card)',
               }}
             >
               <RecentBets />

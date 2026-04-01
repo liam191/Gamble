@@ -192,10 +192,13 @@ export function Game() {
               fontWeight: game === g.id ? 700 : 500,
               fontFamily: 'var(--font-heading)',
               borderRadius: 'var(--radius-md) var(--radius-md) 0 0',
-              background: game === g.id ? 'var(--surface-2)' : 'transparent',
-              color: game === g.id ? 'var(--text-primary)' : 'var(--text-muted)',
-              border: game === g.id ? '1px solid var(--surface-3)' : '1px solid transparent',
+              background: game === g.id
+                ? 'linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%)'
+                : 'transparent',
+              color: game === g.id ? 'var(--accent-gold)' : 'var(--text-muted)',
+              border: game === g.id ? '1px solid var(--surface-4)' : '1px solid transparent',
               borderBottom: game === g.id ? '1px solid var(--surface-2)' : '1px solid transparent',
+              boxShadow: game === g.id ? '0 -2px 8px oklch(78% 0.16 85 / 0.08)' : 'none',
               cursor: isLocked ? 'not-allowed' : 'pointer',
               opacity: isLocked ? 0.5 : 1,
               transition: 'all 0.2s ease-out',
@@ -210,12 +213,13 @@ export function Game() {
       {/* Game area */}
       <div
         style={{
-          background: 'var(--surface-2)',
-          border: '1px solid var(--surface-3)',
+          background: 'linear-gradient(180deg, var(--surface-2) 0%, oklch(12% 0.02 275) 100%)',
+          border: '1px solid var(--surface-4)',
           borderTop: 'none',
           borderRadius: '0 var(--radius-lg) var(--radius-lg) var(--radius-lg)',
           padding: 'var(--space-5)',
           minHeight: '280px',
+          boxShadow: 'var(--shadow-elevated), inset 0 1px 0 oklch(100% 0 0 / 0.03)',
         }}
       >
         {game === 'coin' && (
@@ -273,13 +277,16 @@ export function Game() {
         <div
           style={{
             marginTop: 'var(--space-3)',
-            padding: 'var(--space-4)',
-            background: 'var(--surface-1)',
+            padding: 'var(--space-5)',
+            background: 'linear-gradient(180deg, var(--surface-2) 0%, var(--surface-1) 100%)',
             borderRadius: 'var(--radius-md)',
             textAlign: 'center',
-            color: 'var(--text-muted)',
+            color: 'var(--accent-gold-dim)',
             fontSize: '0.875rem',
-            border: '1px solid var(--surface-3)',
+            fontWeight: 600,
+            fontFamily: 'var(--font-heading)',
+            border: '1px solid var(--surface-4)',
+            letterSpacing: '0.02em',
           }}
         >
           Connect your wallet to play

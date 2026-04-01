@@ -182,9 +182,9 @@ export function Baccarat({ selected, onSelect, result, commitHash, isLocked, isR
     : null
 
   const betOptions = [
-    { mask: PLAYER_MASK, label: '🎰 Player', sub: '2.08x', activeBg: 'var(--action)' },
-    { mask: TIE_MASK, label: '🤝 Tie', sub: '12.48x', activeBg: 'var(--win)' },
-    { mask: BANKER_MASK, label: '🏦 Banker', sub: '2.08x', activeBg: 'oklch(50% 0.18 25)' },
+    { mask: PLAYER_MASK, label: '🎰 Player', sub: '2.08x', activeBg: 'linear-gradient(180deg, var(--action-hover) 0%, var(--action) 100%)' },
+    { mask: TIE_MASK, label: '🤝 Tie', sub: '12.48x', activeBg: 'linear-gradient(180deg, var(--win) 0%, var(--win-dim) 100%)' },
+    { mask: BANKER_MASK, label: '🏦 Banker', sub: '2.08x', activeBg: 'linear-gradient(180deg, oklch(55% 0.2 25) 0%, oklch(45% 0.18 25) 100%)' },
   ]
 
   return (
@@ -193,10 +193,11 @@ export function Baccarat({ selected, onSelect, result, commitHash, isLocked, isR
       <div
         style={{
           width: '100%',
-          background: 'var(--felt-green-subtle)',
+          background: 'radial-gradient(ellipse at 50% 40%, var(--felt-green) 0%, var(--felt-green-subtle) 100%)',
           borderRadius: 'var(--radius-lg)',
           padding: 'var(--space-5)',
-          border: '1px solid oklch(30% 0.04 155)',
+          border: '2px solid oklch(28% 0.06 155)',
+          boxShadow: 'inset 0 2px 16px oklch(0% 0 0 / 0.3), 0 0 16px oklch(32% 0.1 155 / 0.1)',
         }}
       >
         <div className="flex justify-around items-start">

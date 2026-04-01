@@ -27,33 +27,35 @@ export function CoinFlip({ selected, onSelect, result, isLocked, isRolling }: Pr
       </div>
       <div className="flex" style={{ gap: 'var(--space-4)' }}>
         {[
-          { mask: 1, label: '👑 Heads', activeColor: 'var(--accent-gold)' },
-          { mask: 2, label: '🌙 Tails', activeBg: 'oklch(45% 0.15 290)' },
-        ].map(({ mask, label, activeColor, activeBg }) => (
+          { mask: 1, label: '👑 Heads', activeBg: 'linear-gradient(180deg, var(--accent-gold-bright) 0%, var(--accent-gold) 100%)' },
+          { mask: 2, label: '🌙 Tails', activeBg: 'linear-gradient(180deg, oklch(50% 0.17 290) 0%, oklch(40% 0.15 290) 100%)' },
+        ].map(({ mask, label, activeBg }) => (
           <button
             key={mask}
             onClick={() => onSelect(mask)}
             disabled={isLocked}
             style={{
               padding: 'var(--space-4) var(--space-8)',
-              borderRadius: 'var(--radius-md)',
+              borderRadius: 'var(--radius-lg)',
               fontSize: '1rem',
               fontWeight: 700,
               fontFamily: 'var(--font-heading)',
               background: selected === mask
-                ? (activeBg || activeColor || 'var(--accent-gold)')
+                ? activeBg
                 : 'var(--surface-3)',
               color: selected === mask
                 ? (mask === 1 ? 'oklch(15% 0.02 85)' : 'oklch(93% 0.01 290)')
                 : 'var(--text-primary)',
               border: selected === mask
-                ? 'none'
+                ? '2px solid oklch(100% 0 0 / 0.15)'
                 : '1px solid var(--surface-4)',
               cursor: isLocked ? 'not-allowed' : 'pointer',
               opacity: isLocked ? 0.5 : 1,
               transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-              transform: selected === mask ? 'scale(1.05)' : 'scale(1)',
-              boxShadow: selected === mask ? 'var(--shadow-gold)' : 'none',
+              transform: selected === mask ? 'scale(1.06)' : 'scale(1)',
+              boxShadow: selected === mask
+                ? (mask === 1 ? 'var(--shadow-gold-lg)' : '0 0 24px oklch(45% 0.15 290 / 0.3)')
+                : 'none',
             }}
           >
             {label}

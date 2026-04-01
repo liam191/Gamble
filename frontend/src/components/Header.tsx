@@ -19,8 +19,9 @@ export function Header() {
       className="flex items-center justify-between"
       style={{
         padding: 'var(--space-4) var(--space-6)',
-        background: 'var(--surface-1)',
-        borderBottom: '1px solid var(--surface-3)',
+        background: 'linear-gradient(180deg, var(--surface-2) 0%, var(--surface-1) 100%)',
+        borderBottom: '1px solid var(--accent-gold-dim)',
+        boxShadow: '0 1px 0 oklch(78% 0.16 85 / 0.08), 0 4px 16px oklch(0% 0 0 / 0.3)',
       }}
     >
       <h1
@@ -28,8 +29,9 @@ export function Header() {
         style={{
           fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)',
           fontWeight: 800,
-          letterSpacing: '-0.02em',
+          letterSpacing: '0.02em',
           color: 'var(--accent-gold)',
+          textShadow: '0 0 20px oklch(78% 0.16 85 / 0.3)',
         }}
       >
         UPchain Casino
@@ -80,23 +82,26 @@ export function Header() {
               padding: 'var(--space-2) var(--space-5)',
               fontSize: '0.8125rem',
               fontWeight: 700,
-              background: 'var(--accent-gold)',
+              background: 'linear-gradient(180deg, var(--accent-gold-bright) 0%, var(--accent-gold) 100%)',
               color: 'oklch(15% 0.02 85)',
               borderRadius: 'var(--radius-sm)',
               border: 'none',
               cursor: connectors[0] ? 'pointer' : 'not-allowed',
               opacity: connectors[0] ? 1 : 0.5,
-              transition: 'background 0.2s ease-out, transform 0.15s ease-out',
+              transition: 'all 0.2s ease-out',
+              boxShadow: 'var(--shadow-gold)',
             }}
             onMouseOver={(e) => {
               if (connectors[0]) {
-                e.currentTarget.style.background = 'var(--accent-gold-bright)'
+                e.currentTarget.style.background = 'linear-gradient(180deg, var(--accent-gold-bright) 0%, var(--accent-gold-bright) 100%)'
                 e.currentTarget.style.transform = 'translateY(-1px)'
+                e.currentTarget.style.boxShadow = 'var(--shadow-gold-lg)'
               }
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.background = 'var(--accent-gold)'
+              e.currentTarget.style.background = 'linear-gradient(180deg, var(--accent-gold-bright) 0%, var(--accent-gold) 100%)'
               e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.boxShadow = 'var(--shadow-gold)'
             }}
           >
             {connectors[0] ? 'Connect Wallet' : 'No Wallet'}

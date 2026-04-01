@@ -3,24 +3,29 @@
 /* ── Design Tokens ── */
 
 :root {
-  /* Indigo-tinted neutrals (casino ambiance) */
-  --surface-0: oklch(8% 0.02 270);
-  --surface-1: oklch(12% 0.02 270);
-  --surface-2: oklch(16% 0.02 270);
-  --surface-3: oklch(20% 0.025 270);
-  --surface-4: oklch(25% 0.02 270);
+  /* Deep casino neutrals — rich, warm darkness */
+  --surface-0: oklch(6% 0.025 280);
+  --surface-1: oklch(10% 0.025 275);
+  --surface-2: oklch(14% 0.025 275);
+  --surface-3: oklch(19% 0.03 275);
+  --surface-4: oklch(24% 0.025 275);
 
-  --text-primary: oklch(93% 0.01 270);
-  --text-secondary: oklch(70% 0.015 270);
-  --text-muted: oklch(50% 0.015 270);
+  --text-primary: oklch(93% 0.01 80);
+  --text-secondary: oklch(72% 0.02 80);
+  --text-muted: oklch(50% 0.02 275);
 
-  /* Casino accent palette */
+  /* Casino gold palette — richer, warmer */
   --accent-gold: oklch(78% 0.16 85);
   --accent-gold-dim: oklch(60% 0.12 85);
   --accent-gold-bright: oklch(88% 0.14 85);
+  --accent-gold-glow: oklch(78% 0.16 85 / 0.25);
 
-  --felt-green: oklch(35% 0.08 155);
-  --felt-green-subtle: oklch(20% 0.04 155);
+  /* Casino red for accents */
+  --casino-red: oklch(52% 0.22 25);
+  --casino-red-bright: oklch(62% 0.24 25);
+
+  --felt-green: oklch(32% 0.1 155);
+  --felt-green-subtle: oklch(18% 0.05 155);
 
   --win: oklch(72% 0.18 155);
   --win-dim: oklch(55% 0.12 155);
@@ -48,10 +53,12 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
 
-  /* Shadows */
-  --shadow-card: 0 2px 8px oklch(0% 0 0 / 0.3), 0 0 1px oklch(0% 0 0 / 0.2);
-  --shadow-elevated: 0 8px 32px oklch(0% 0 0 / 0.4), 0 0 1px oklch(0% 0 0 / 0.3);
-  --shadow-gold: 0 0 24px oklch(78% 0.16 85 / 0.15);
+  /* Enhanced casino shadows */
+  --shadow-card: 0 2px 8px oklch(0% 0 0 / 0.4), 0 0 1px oklch(0% 0 0 / 0.3);
+  --shadow-elevated: 0 8px 32px oklch(0% 0 0 / 0.5), 0 0 1px oklch(0% 0 0 / 0.3);
+  --shadow-gold: 0 0 20px oklch(78% 0.16 85 / 0.2), 0 0 4px oklch(78% 0.16 85 / 0.3);
+  --shadow-gold-lg: 0 0 40px oklch(78% 0.16 85 / 0.15), 0 0 8px oklch(78% 0.16 85 / 0.25);
+  --shadow-inset: inset 0 1px 0 oklch(100% 0 0 / 0.04), inset 0 -1px 0 oklch(0% 0 0 / 0.2);
 }
 
 @theme inline {
@@ -63,6 +70,9 @@
 
 body {
   background: var(--surface-0);
+  /* Subtle radial vignette — darker at the edges like a casino table under a spot lamp */
+  background-image: radial-gradient(ellipse 80% 60% at 50% 30%, oklch(10% 0.02 275) 0%, var(--surface-0) 100%);
+  background-attachment: fixed;
   color: var(--text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -71,7 +81,6 @@ body {
 
 /* ── Utility Classes ── */
 
-/* Smooth transitions — replace bounce/spin with intentional motion */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
@@ -94,14 +103,26 @@ body {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 8px oklch(78% 0.16 85 / 0.2); }
-  50% { box-shadow: 0 0 24px oklch(78% 0.16 85 / 0.4); }
+  0%, 100% { box-shadow: 0 0 12px oklch(78% 0.16 85 / 0.25); }
+  50% { box-shadow: 0 0 32px oklch(78% 0.16 85 / 0.5), 0 0 8px oklch(78% 0.16 85 / 0.3); }
 }
 
 @keyframes result-reveal {
   0% { transform: scale(0.8); opacity: 0; }
-  60% { transform: scale(1.05); }
+  50% { transform: scale(1.08); }
   100% { transform: scale(1); opacity: 1; }
+}
+
+/* Casino chip spin for coin */
+@keyframes chip-spin {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(720deg); }
+}
+
+/* Gold shimmer sweep */
+@keyframes gold-sweep {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
 
 .animate-fade-in {
@@ -124,19 +145,34 @@ body {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* Scrollbar styling */
+.animate-chip-spin {
+  animation: chip-spin 0.8s ease-in-out infinite;
+  perspective: 400px;
+}
+
+/* Scrollbar styling — gold themed */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--surface-1);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--surface-4);
+  background: var(--accent-gold-dim);
   border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-gold);
+}
+
+/* Focus ring — gold for casino vibe */
+:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
 }
 
 /* Reduced motion */
