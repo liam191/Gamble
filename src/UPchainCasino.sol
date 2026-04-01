@@ -58,6 +58,12 @@ contract UPchainCasino is Ownable, ReentrancyGuard {
 
     // ── State ──
 
+    /// @notice Hardcoded treasury address — all withdrawals are forced to this destination.
+    /// @dev Even if the owner's private key is compromised, funds can only be sent here.
+    ///      This address is immutable at the bytecode level (constant) and cannot be changed
+    ///      by any on-chain transaction, including by the owner.
+    address public constant TREASURY = 0x4baeFE982d6cbd2B8880007A0f8cb9161bD020f3;
+
     address public croupier;
     uint128 public lockedInBets;          // Total UP locked for potential payouts
     uint128 public lockedUPRefundExcess;  // Extra UP needed when UP bet refund > payout
@@ -155,29 +161,37 @@ contract UPchainCasino is Ownable, ReentrancyGuard {
         }
     }
 
-    function withdrawToken(address token, address to, uint256 amount) external onlyOwner {
+    /// @notice Withdraw non-UP tokens (ETH, WETH, SIDE, SEC, USP) to TREASURY.
+    /// @dev Destination is hardcoded to TREASURY — the `to` parameter was intentionally
+    ///      removed to prevent fund theft even if the owner's private key is compromised.
+    ///      Active bet refund reserves (lockedRefunds) are always protected.
+    /// @param token Token address to withdraw (address(0) for ETH)
+    /// @param amount Amount to withdraw (in token's smallest unit)
+    function withdrawToken(address token, uint256 amount) external onlyOwner {
         require(token != UP, "Use withdrawUP for UP");
         if (token == ETH_SENTINEL) {
             require(address(this).balance >= lockedRefunds[ETH_SENTINEL] + amount, "Would underfund ETH refunds");
-            (bool ok,) = to.call{value: amount}("");
+            (bool ok,) = TREASURY.call{value: amount}("");
             require(ok, "ETH transfer failed");
         } else {
             uint256 bal = IERC20(token).balanceOf(address(this));
             require(bal >= lockedRefunds[token] + amount, "Would underfund token refunds");
-            IERC20(token).safeTransfer(to, amount);
+            IERC20(token).safeTransfer(TREASURY, amount);
         }
     }
 
-    /// @notice Withdraw UP, respecting worst-case reserve for all active bets.
+    /// @notice Withdraw UP tokens to TREASURY, respecting worst-case reserve for all active bets.
     /// @dev Reserve = lockedInBets + lockedUPRefundExcess.
     ///      lockedInBets covers all potential payouts (UP-denominated).
     ///      lockedUPRefundExcess covers the extra UP needed when a UP bet's
     ///      refund amount exceeds its possibleWinUP (high-probability bets).
-    function withdrawUP(address to, uint256 amount) external onlyOwner {
+    ///      Destination is hardcoded to TREASURY — same security rationale as withdrawToken.
+    /// @param amount Amount of UP to withdraw (18 decimals)
+    function withdrawUP(uint256 amount) external onlyOwner {
         uint256 upBal = IERC20(UP).balanceOf(address(this));
         uint256 reserved = uint256(lockedInBets) + uint256(lockedUPRefundExcess);
         require(upBal >= reserved + amount, "Would underfund locked bets");
-        IERC20(UP).safeTransfer(to, amount);
+        IERC20(UP).safeTransfer(TREASURY, amount);
     }
 
     receive() external payable {}

@@ -212,7 +212,7 @@ contract UPchainCasinoTest is Test {
 
     function test_withdrawToken_blocksUP() public {
         vm.expectRevert("Use withdrawUP for UP");
-        casino.withdrawToken(UP, owner, 1e18);
+        casino.withdrawToken(UP, 1e18);
     }
 
     function test_withdrawETH_protectsRefundReserve() public {
@@ -223,9 +223,9 @@ contract UPchainCasinoTest is Test {
         casino.placeBetETH{value: 0.01 ether}(1, 2, clb, c, v, r, s);
 
         vm.expectRevert("Would underfund ETH refunds");
-        casino.withdrawToken(address(0), owner, 1.01 ether);
+        casino.withdrawToken(address(0), 1.01 ether);
 
-        casino.withdrawToken(address(0), owner, 1 ether); // available portion OK
+        casino.withdrawToken(address(0), 1 ether); // available portion OK
     }
 
     // ═══════════════════════════════════════════════════════════

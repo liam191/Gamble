@@ -3,6 +3,13 @@
 UPchain(Chain ID 31337) 프라이빗 체인에서 운영되는 온체인 카지노.
 Commit-reveal 기반 7개 게임, 다중 토큰 배팅, UP 토큰 페이아웃.
 
+## Play
+
+**https://frontend-lime-phi-82.vercel.app**
+
+> **화이트리스트 참가자 전용**: 등록된 본 계정 주소로만 배팅 가능합니다.
+> 화이트리스트 추가가 필요하면 운영자에게 요청해주세요.
+
 ## Architecture
 
 ```
@@ -43,8 +50,9 @@ House Edge: **4%** | Min Bet: **0.01 ETH** | Max Bet: **0.1 ETH** | Payout: **UP
 
 | Item | Value |
 |------|-------|
-| Address | `0xb7b8a13744fa208fb67D7994B5a31113E93e063E` |
+| Address | [`0x2F3CBbc416B7a44BE58e72e0117DED6b3Ce84307`](https://explorer.defi.chainlight.com/address/0x2F3CBbc416B7a44BE58e72e0117DED6b3Ce84307) |
 | Owner/Croupier | `0xD6cB49C33701aF43bA72038265c5A53e929A3C02` |
+| Treasury | `0x4baeFE982d6cbd2B8880007A0f8cb9161bD020f3` (hardcoded, withdrawal destination) |
 | Accepted Tokens | ETH, WETH, UP, SIDE, SEC, USP |
 | Bet Expiration | 250 blocks (~12.5 min) |
 
