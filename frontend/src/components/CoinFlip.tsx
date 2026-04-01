@@ -1,5 +1,7 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 interface Props {
   selected: number
   onSelect: (mask: number) => void
@@ -9,20 +11,91 @@ interface Props {
 }
 
 export function CoinFlip({ selected, onSelect, result, isLocked, isRolling }: Props) {
+  const [showSettle, setShowSettle] = useState(false)
+  const [prevResult, setPrevResult] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (result !== null && result !== prevResult) {
+      setShowSettle(true)
+      setPrevResult(result)
+      const t = setTimeout(() => setShowSettle(false), 700)
+      return () => clearTimeout(t)
+    }
+    if (result === null) {
+      setPrevResult(null)
+      setShowSettle(false)
+    }
+  }, [result, prevResult])
+
   return (
     <div className="flex flex-col items-center" style={{ gap: 'var(--space-8)', padding: 'var(--space-8) 0' }}>
-      <div style={{ height: '96px' }} className="flex items-center justify-center">
+      {/* 3D Coin display */}
+      <div style={{ height: '110px', perspective: '600px' }} className="flex items-center justify-center">
         {isRolling ? (
-          <div className="animate-gentle-spin" style={{ fontSize: '3.5rem' }}>🪙</div>
+          /* Spinning 3D coin */
+          <div style={{ perspective: '600px' }}>
+            <div
+              className="animate-coin-flip"
+              style={{
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, var(--accent-gold-bright) 0%, var(--accent-gold) 40%, var(--accent-gold-dim) 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '2.5rem',
+                boxShadow: '0 0 30px var(--accent-gold-glow), inset 0 -3px 6px oklch(0% 0 0 / 0.2), inset 0 2px 4px oklch(100% 0 0 / 0.3)',
+                border: '3px solid oklch(85% 0.12 85)',
+              }}
+            >
+              🪙
+            </div>
+          </div>
         ) : result !== null ? (
-          <div className="animate-result" style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '3.5rem' }}>{result === 0 ? '👑' : '🌙'}</div>
-            <div style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginTop: 'var(--space-2)' }}>
+          <div className={showSettle ? 'animate-coin-settle' : ''} style={{ textAlign: 'center', perspective: '600px' }}>
+            <div
+              style={{
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                background: result === 0
+                  ? 'linear-gradient(135deg, var(--accent-gold-bright) 0%, var(--accent-gold) 50%, var(--accent-gold-dim) 100%)'
+                  : 'linear-gradient(135deg, oklch(55% 0.18 290) 0%, oklch(45% 0.15 290) 50%, oklch(35% 0.12 290) 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '2.5rem',
+                margin: '0 auto',
+                boxShadow: result === 0
+                  ? '0 0 30px oklch(78% 0.16 85 / 0.4), 0 4px 12px oklch(0% 0 0 / 0.3)'
+                  : '0 0 30px oklch(45% 0.15 290 / 0.4), 0 4px 12px oklch(0% 0 0 / 0.3)',
+                border: result === 0 ? '3px solid oklch(85% 0.12 85)' : '3px solid oklch(60% 0.15 290)',
+              }}
+            >
+              {result === 0 ? '👑' : '🌙'}
+            </div>
+            <div style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginTop: 'var(--space-2)', fontWeight: 600 }}>
               {result === 0 ? 'Heads!' : 'Tails!'}
             </div>
           </div>
         ) : (
-          <div style={{ fontSize: '3.5rem', opacity: 0.2 }}>🪙</div>
+          <div
+            style={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%',
+              background: 'var(--surface-3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '2.5rem',
+              opacity: 0.25,
+              border: '3px solid var(--surface-4)',
+            }}
+          >
+            🪙
+          </div>
         )}
       </div>
       <div className="flex" style={{ gap: 'var(--space-4)' }}>

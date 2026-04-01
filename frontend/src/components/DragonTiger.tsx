@@ -23,12 +23,13 @@ interface Props {
   isRolling: boolean
 }
 
-function CardDisplay({ card, revealed, label, isWinner, isRolling }: {
+function CardDisplay({ card, revealed, label, isWinner, isRolling, side }: {
   card: Card | null
   revealed: boolean
   label: string
   isWinner: boolean
   isRolling: boolean
+  side: 'left' | 'right'
 }) {
   return (
     <div
@@ -42,14 +43,17 @@ function CardDisplay({ card, revealed, label, isWinner, isRolling }: {
       <span style={{
         fontSize: '0.75rem',
         fontWeight: 700,
-        color: 'var(--text-muted)',
+        color: isWinner ? 'var(--accent-gold)' : 'var(--text-muted)',
         textTransform: 'uppercase',
         letterSpacing: '0.08em',
         fontFamily: 'var(--font-heading)',
+        transition: 'color 0.3s ease-out',
+        textShadow: isWinner ? '0 0 12px oklch(78% 0.16 85 / 0.4)' : 'none',
       }}>
         {label}
       </span>
       <div
+        className={revealed ? (side === 'left' ? 'animate-card-deal-left' : 'animate-card-deal-right') : ''}
         style={{
           position: 'relative',
           width: '96px',
@@ -57,7 +61,9 @@ function CardDisplay({ card, revealed, label, isWinner, isRolling }: {
           borderRadius: 'var(--radius-md)',
           overflow: 'hidden',
           transition: 'box-shadow 0.5s ease-out',
-          boxShadow: isWinner ? '0 0 20px var(--accent-gold), 0 0 2px var(--accent-gold)' : 'var(--shadow-card)',
+          boxShadow: isWinner
+            ? '0 0 24px var(--accent-gold), 0 0 4px var(--accent-gold), 0 8px 20px oklch(0% 0 0 / 0.4)'
+            : 'var(--shadow-card)',
           perspective: '600px',
         }}
       >
@@ -65,7 +71,7 @@ function CardDisplay({ card, revealed, label, isWinner, isRolling }: {
           style={{
             width: '100%',
             height: '100%',
-            transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
+            transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
             transformStyle: 'preserve-3d',
             transform: revealed ? 'rotateY(0deg)' : 'rotateY(180deg)',
           }}
@@ -76,12 +82,12 @@ function CardDisplay({ card, revealed, label, isWinner, isRolling }: {
             )}
           </div>
           <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-            <Image src={CARD_BACK} alt="Card back" fill className={`object-contain rounded-lg ${isRolling && !revealed ? 'animate-shimmer' : ''}`} />
+            <Image src={CARD_BACK} alt="Card back" fill className={`object-contain rounded-lg ${isRolling && !revealed ? 'animate-card-shimmer' : ''}`} />
           </div>
         </div>
       </div>
       {card && revealed && (
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{card.name}</span>
+        <span className="animate-fade-in" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{card.name}</span>
       )}
     </div>
   )
@@ -130,22 +136,26 @@ export function DragonTiger({ selected, onSelect, result, commitHash, isLocked, 
     <div className="flex flex-col items-center" style={{ gap: 'var(--space-6)', padding: 'var(--space-6) 0' }}>
       {/* Cards */}
       <div className="flex items-center" style={{ gap: 'var(--space-8)' }}>
-        <CardDisplay card={dragonCard} revealed={dragonRevealed} label="🐉 Dragon" isWinner={outcome === 'dragon' || outcome === 'tie'} isRolling={isRolling} />
-        <div style={{
+        <CardDisplay card={dragonCard} revealed={dragonRevealed} label="🐉 Dragon" isWinner={outcome === 'dragon' || outcome === 'tie'} isRolling={isRolling} side="left" />
+        <div className={isRolling ? 'animate-tension' : ''} style={{
           fontSize: '1.25rem',
           fontWeight: 800,
-          color: 'var(--text-muted)',
+          color: isRolling ? 'var(--accent-gold)' : 'var(--text-muted)',
           fontFamily: 'var(--font-heading)',
+          transition: 'color 0.3s ease-out',
+          textShadow: isRolling ? '0 0 12px oklch(78% 0.16 85 / 0.4)' : 'none',
         }}>VS</div>
-        <CardDisplay card={tigerCard} revealed={tigerRevealed} label="🐯 Tiger" isWinner={outcome === 'tiger' || outcome === 'tie'} isRolling={isRolling} />
+        <CardDisplay card={tigerCard} revealed={tigerRevealed} label="🐯 Tiger" isWinner={outcome === 'tiger' || outcome === 'tie'} isRolling={isRolling} side="right" />
       </div>
 
       {resultText && (
-        <div className="animate-result" style={{
-          fontSize: '1.125rem',
-          fontWeight: 700,
+        <div className="animate-win-burst" style={{
+          fontSize: '1.25rem',
+          fontWeight: 800,
           color: 'var(--accent-gold)',
           fontFamily: 'var(--font-heading)',
+          textShadow: '0 0 20px oklch(78% 0.16 85 / 0.5)',
+          letterSpacing: '0.04em',
         }}>
           {resultText}
         </div>

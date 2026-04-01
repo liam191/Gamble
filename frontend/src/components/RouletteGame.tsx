@@ -102,6 +102,7 @@ function RouletteWheel({ result, isRolling }: { result: number | null; isRolling
       {/* Center display */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div
+          className={result !== null && !isRolling ? 'animate-ball-bounce' : ''}
           style={{
             width: '64px',
             height: '64px',
@@ -113,16 +114,22 @@ function RouletteWheel({ result, isRolling }: { result: number | null; isRolling
             fontWeight: 800,
             fontFamily: 'var(--font-heading)',
             fontVariantNumeric: 'tabular-nums',
-            boxShadow: 'inset 0 2px 8px oklch(0% 0 0 / 0.3)',
-            background: result !== null
+            boxShadow: result !== null && !isRolling
+              ? `inset 0 2px 8px oklch(0% 0 0 / 0.3), 0 0 16px ${numberColor(result) === 'red' ? 'oklch(48% 0.2 25 / 0.5)' : numberColor(result) === 'green' ? 'oklch(42% 0.12 155 / 0.5)' : 'oklch(50% 0.02 270 / 0.5)'}`
+              : 'inset 0 2px 8px oklch(0% 0 0 / 0.3)',
+            background: result !== null && !isRolling
               ? (numberColor(result) === 'red' ? 'oklch(48% 0.2 25)'
                 : numberColor(result) === 'black' ? 'oklch(15% 0.02 270)'
                 : 'oklch(42% 0.12 155)')
-              : 'var(--surface-3)',
-            color: result !== null ? 'var(--text-primary)' : 'var(--text-muted)',
+              : isRolling ? 'var(--accent-gold-dim)' : 'var(--surface-3)',
+            color: result !== null && !isRolling ? 'var(--text-primary)' : isRolling ? 'oklch(15% 0.02 85)' : 'var(--text-muted)',
+            transition: 'background 0.3s ease-out',
+            border: result !== null && !isRolling ? '2px solid oklch(100% 0 0 / 0.15)' : '2px solid transparent',
           }}
         >
-          {isRolling ? '?' : result !== null ? result : '-'}
+          {isRolling ? (
+            <span className="animate-number-scan" style={{ fontSize: '1.25rem' }}>?</span>
+          ) : result !== null ? result : '-'}
         </div>
       </div>
     </div>
@@ -301,12 +308,13 @@ export function RouletteGame({ mask, onMaskChange, result, isLocked, isRolling }
       <RouletteWheel result={result} isRolling={isRolling} />
 
       {result !== null && !isRolling && (
-        <div className="animate-result" style={{
-          fontSize: '1rem',
-          fontWeight: 700,
+        <div className={hasBit(mask, result) ? 'animate-win-burst' : 'animate-result'} style={{
+          fontSize: '1.125rem',
+          fontWeight: 800,
           fontFamily: 'var(--font-heading)',
           color: numberColor(result) === 'red' ? 'var(--lose)' :
             numberColor(result) === 'green' ? 'var(--win)' : 'var(--text-secondary)',
+          textShadow: hasBit(mask, result) ? '0 0 20px oklch(72% 0.18 155 / 0.5)' : 'none',
         }}>
           {result} {numberColor(result) === 'red' ? 'Red' : numberColor(result) === 'black' ? 'Black' : 'Green'}
           {hasBit(mask, result) ? ' — You Win!' : ' — You Lose'}

@@ -108,15 +108,121 @@ body {
 }
 
 @keyframes result-reveal {
-  0% { transform: scale(0.8); opacity: 0; }
-  50% { transform: scale(1.08); }
+  0% { transform: scale(0.5); opacity: 0; filter: brightness(2); }
+  40% { transform: scale(1.12); opacity: 1; filter: brightness(1.5); }
+  70% { transform: scale(0.98); filter: brightness(1); }
+  100% { transform: scale(1); opacity: 1; filter: brightness(1); }
+}
+
+/* ── Casino-grade animations ── */
+
+/* 3D coin flip — fast continuous rotation */
+@keyframes coin-flip-3d {
+  0%   { transform: rotateY(0deg) scale(1); }
+  25%  { transform: rotateY(450deg) scale(1.15); }
+  50%  { transform: rotateY(900deg) scale(1); }
+  75%  { transform: rotateY(1350deg) scale(1.1); }
+  100% { transform: rotateY(1800deg) scale(1); }
+}
+
+/* Final coin settle — dramatic last flip */
+@keyframes coin-settle {
+  0%   { transform: rotateY(0deg) scale(1.2); filter: brightness(1.3); }
+  30%  { transform: rotateY(180deg) scale(1.1); }
+  60%  { transform: rotateY(360deg) scale(1.05); }
+  80%  { transform: rotateY(360deg) scale(1); filter: brightness(1); }
+  100% { transform: rotateY(360deg) scale(1); }
+}
+
+/* 3D dice tumble — chaotic rotation */
+@keyframes dice-tumble {
+  0%   { transform: rotateX(0deg) rotateZ(0deg) scale(1); }
+  20%  { transform: rotateX(144deg) rotateZ(72deg) scale(1.15); }
+  40%  { transform: rotateX(288deg) rotateZ(144deg) scale(0.95); }
+  60%  { transform: rotateX(432deg) rotateZ(216deg) scale(1.1); }
+  80%  { transform: rotateX(576deg) rotateZ(288deg) scale(1); }
+  100% { transform: rotateX(720deg) rotateZ(360deg) scale(1); }
+}
+
+/* Dice bounce landing */
+@keyframes dice-land {
+  0%   { transform: translateY(-20px) scale(1.3); opacity: 0; }
+  30%  { transform: translateY(4px) scale(0.95); opacity: 1; }
+  50%  { transform: translateY(-8px) scale(1.05); }
+  70%  { transform: translateY(2px) scale(0.98); }
+  85%  { transform: translateY(-3px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* Number scan — rapidly cycling for hi-lo */
+@keyframes number-scan {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Tension pulse — breathing effect for waiting */
+@keyframes tension-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.03); opacity: 1; }
+}
+
+/* Win celebration burst — expanding ring */
+@keyframes win-burst {
+  0%   { transform: scale(0.8); opacity: 0; }
+  20%  { transform: scale(1.15); opacity: 1; filter: brightness(1.4); }
+  40%  { transform: scale(0.95); filter: brightness(1.2); }
+  60%  { transform: scale(1.05); filter: brightness(1); }
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* Casino chip spin for coin */
-@keyframes chip-spin {
-  0% { transform: rotateY(0deg); }
-  100% { transform: rotateY(720deg); }
+/* Win glow ring — expanding outward ring */
+@keyframes win-ring {
+  0%   { box-shadow: 0 0 0 0 oklch(72% 0.18 155 / 0.6); }
+  100% { box-shadow: 0 0 0 20px oklch(72% 0.18 155 / 0); }
+}
+
+/* Lose shake — horizontal jitter */
+@keyframes lose-shake {
+  0%, 100% { transform: translateX(0); }
+  10% { transform: translateX(-6px); }
+  20% { transform: translateX(5px); }
+  30% { transform: translateX(-4px); }
+  40% { transform: translateX(3px); }
+  50% { transform: translateX(-2px); }
+  60% { transform: translateX(1px); }
+  70% { transform: translateX(0); }
+}
+
+/* Card deal — slide in from side */
+@keyframes card-deal-left {
+  0%   { transform: translateX(-40px) translateY(-20px) rotate(-8deg) scale(0.8); opacity: 0; }
+  60%  { transform: translateX(3px) translateY(0) rotate(1deg) scale(1.02); opacity: 1; }
+  100% { transform: translateX(0) translateY(0) rotate(0deg) scale(1); }
+}
+
+@keyframes card-deal-right {
+  0%   { transform: translateX(40px) translateY(-20px) rotate(8deg) scale(0.8); opacity: 0; }
+  60%  { transform: translateX(-3px) translateY(0) rotate(-1deg) scale(1.02); opacity: 1; }
+  100% { transform: translateX(0) translateY(0) rotate(0deg) scale(1); }
+}
+
+/* Card shimmer — light sweep across card back */
+@keyframes card-shimmer {
+  0%   { opacity: 0.6; filter: brightness(1); }
+  30%  { opacity: 1; filter: brightness(1.2); }
+  60%  { opacity: 0.7; filter: brightness(0.9); }
+  100% { opacity: 0.6; filter: brightness(1); }
+}
+
+/* Roulette ball bounce */
+@keyframes ball-bounce {
+  0%   { transform: translateY(0) scale(1); }
+  20%  { transform: translateY(-6px) scale(1.1); }
+  40%  { transform: translateY(0) scale(0.95); }
+  55%  { transform: translateY(-3px) scale(1.05); }
+  70%  { transform: translateY(0) scale(0.98); }
+  85%  { transform: translateY(-1px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
 }
 
 /* Gold shimmer sweep */
@@ -125,12 +231,20 @@ body {
   100% { background-position: 200% center; }
 }
 
+/* Slot-style number scroll */
+@keyframes number-slot {
+  0%   { transform: translateY(100%); opacity: 0; }
+  15%  { transform: translateY(0); opacity: 1; }
+  85%  { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100%); opacity: 0; }
+}
+
 .animate-fade-in {
   animation: fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-result {
-  animation: result-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: result-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-shimmer {
@@ -145,9 +259,58 @@ body {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-.animate-chip-spin {
-  animation: chip-spin 0.8s ease-in-out infinite;
+.animate-coin-flip {
+  animation: coin-flip-3d 0.8s linear infinite;
   perspective: 400px;
+}
+
+.animate-coin-settle {
+  animation: coin-settle 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  perspective: 400px;
+}
+
+.animate-dice-tumble {
+  animation: dice-tumble 0.6s linear infinite;
+}
+
+.animate-dice-land {
+  animation: dice-land 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-tension {
+  animation: tension-pulse 1.5s ease-in-out infinite;
+}
+
+.animate-win-burst {
+  animation: win-burst 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-win-ring {
+  animation: win-ring 0.8s ease-out forwards;
+}
+
+.animate-lose-shake {
+  animation: lose-shake 0.5s ease-out forwards;
+}
+
+.animate-card-deal-left {
+  animation: card-deal-left 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-card-deal-right {
+  animation: card-deal-right 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-card-shimmer {
+  animation: card-shimmer 1.2s ease-in-out infinite;
+}
+
+.animate-ball-bounce {
+  animation: ball-bounce 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-number-scan {
+  animation: number-scan 0.15s ease-in-out infinite;
 }
 
 /* Scrollbar styling — gold themed */

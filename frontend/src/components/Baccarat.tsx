@@ -43,15 +43,17 @@ function BaccaratHand({ cards, revealed, label, total, isWinner }: {
         <span style={{
           fontSize: '0.75rem',
           fontWeight: 700,
-          color: 'var(--text-muted)',
+          color: isWinner ? 'var(--accent-gold)' : 'var(--text-muted)',
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
           fontFamily: 'var(--font-heading)',
+          transition: 'color 0.3s ease-out',
+          textShadow: isWinner ? '0 0 12px oklch(78% 0.16 85 / 0.3)' : 'none',
         }}>
           {label}
         </span>
         {total !== null && (
-          <span style={{
+          <span className="animate-result" style={{
             fontSize: '1rem',
             fontWeight: 700,
             padding: '2px 8px',
@@ -59,6 +61,7 @@ function BaccaratHand({ cards, revealed, label, total, isWinner }: {
             background: isWinner ? 'var(--accent-gold)' : 'var(--surface-3)',
             color: isWinner ? 'oklch(15% 0.02 85)' : 'var(--text-primary)',
             fontVariantNumeric: 'tabular-nums',
+            boxShadow: isWinner ? 'var(--shadow-gold)' : 'none',
           }}>
             {total}
           </span>
@@ -68,6 +71,7 @@ function BaccaratHand({ cards, revealed, label, total, isWinner }: {
         {cards.map((card, i) => (
           <div
             key={i}
+            className={revealed[i] ? 'animate-card-deal-left' : ''}
             style={{
               position: 'relative',
               width: '64px',
@@ -75,15 +79,16 @@ function BaccaratHand({ cards, revealed, label, total, isWinner }: {
               borderRadius: 'var(--radius-sm)',
               overflow: 'hidden',
               transition: 'box-shadow 0.5s ease-out',
-              boxShadow: isWinner ? '0 0 12px var(--accent-gold)' : 'var(--shadow-card)',
+              boxShadow: isWinner ? '0 0 16px var(--accent-gold), 0 4px 12px oklch(0% 0 0 / 0.3)' : 'var(--shadow-card)',
               perspective: '600px',
+              animationDelay: `${i * 100}ms`,
             }}
           >
             <div
               style={{
                 width: '100%',
                 height: '100%',
-                transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
+                transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
                 transformStyle: 'preserve-3d',
                 transform: revealed[i] ? 'rotateY(0deg)' : 'rotateY(180deg)',
               }}
@@ -94,7 +99,7 @@ function BaccaratHand({ cards, revealed, label, total, isWinner }: {
                 )}
               </div>
               <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                <Image src={CARD_BACK} alt="Back" fill className="object-contain rounded" />
+                <Image src={CARD_BACK} alt="Back" fill className={`object-contain rounded ${!revealed[i] ? 'animate-card-shimmer' : ''}`} />
               </div>
             </div>
           </div>
@@ -213,11 +218,13 @@ export function Baccarat({ selected, onSelect, result, commitHash, isLocked, isR
       </div>
 
       {showResult && resultText && (
-        <div className="animate-result" style={{
-          fontSize: '1.125rem',
-          fontWeight: 700,
+        <div className="animate-win-burst" style={{
+          fontSize: '1.25rem',
+          fontWeight: 800,
           color: 'var(--accent-gold)',
           fontFamily: 'var(--font-heading)',
+          textShadow: '0 0 20px oklch(78% 0.16 85 / 0.5)',
+          letterSpacing: '0.04em',
         }}>
           {resultText}
         </div>

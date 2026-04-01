@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { DICE_FACES } from '@/lib/constants'
 import { toggleDiceBit, selectedFaces } from '@/lib/utils'
 
@@ -13,17 +14,34 @@ interface Props {
 
 export function Dice({ mask, onMaskChange, result, isLocked, isRolling }: Props) {
   const selected = selectedFaces(mask)
+  const [landed, setLanded] = useState(false)
+  const [prevResult, setPrevResult] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (result !== null && result !== prevResult) {
+      setLanded(true)
+      setPrevResult(result)
+      const t = setTimeout(() => setLanded(false), 600)
+      return () => clearTimeout(t)
+    }
+    if (result === null) {
+      setPrevResult(null)
+      setLanded(false)
+    }
+  }, [result, prevResult])
 
   return (
     <div className="flex flex-col items-center" style={{ gap: 'var(--space-6)', padding: 'var(--space-8) 0' }}>
       {/* Result display */}
       <div style={{ height: '96px' }} className="flex items-center justify-center">
         {isRolling ? (
-          <div className="animate-shimmer" style={{ fontSize: '3.5rem' }}>🎲</div>
+          <div className="animate-dice-tumble" style={{ fontSize: '3.5rem' }}>🎲</div>
         ) : result !== null ? (
-          <div className="animate-result" style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '3.5rem' }}>{DICE_FACES[result]}</div>
-            <div style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginTop: 'var(--space-2)' }}>
+          <div style={{ textAlign: 'center' }}>
+            <div className={landed ? 'animate-dice-land' : ''} style={{ fontSize: '3.5rem' }}>
+              {DICE_FACES[result]}
+            </div>
+            <div className="animate-fade-in" style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginTop: 'var(--space-2)', fontWeight: 600 }}>
               Rolled {result + 1}!
             </div>
           </div>

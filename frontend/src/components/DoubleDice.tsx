@@ -78,21 +78,23 @@ export function DoubleDice({ mask, onMaskChange, result, isLocked, isRolling }: 
       <div style={{ height: '96px' }} className="flex items-center justify-center" >
         {isRolling ? (
           <div className="flex items-center" style={{ gap: 'var(--space-4)' }}>
-            <div className="animate-shimmer" style={{ fontSize: '2.75rem' }}>🎲</div>
-            <div className="animate-shimmer" style={{ fontSize: '2.75rem', animationDelay: '0.3s' }}>🎲</div>
+            <div className="animate-dice-tumble" style={{ fontSize: '2.75rem' }}>🎲</div>
+            <div className="animate-dice-tumble" style={{ fontSize: '2.75rem', animationDelay: '0.15s' }}>🎲</div>
           </div>
         ) : die1 !== null && die2 !== null ? (
-          <div className="animate-result flex items-center" style={{ gap: 'var(--space-3)' }}>
-            <div style={{ fontSize: '2.75rem' }}>{DICE_FACES[die1]}</div>
-            <div style={{ fontSize: '1.25rem', color: 'var(--text-muted)', fontWeight: 700 }}>+</div>
-            <div style={{ fontSize: '2.75rem' }}>{DICE_FACES[die2]}</div>
-            <div style={{ fontSize: '1.25rem', color: 'var(--text-muted)', fontWeight: 700 }}>=</div>
-            <div style={{
+          <div className="flex items-center" style={{ gap: 'var(--space-3)' }}>
+            <div className="animate-dice-land" style={{ fontSize: '2.75rem' }}>{DICE_FACES[die1]}</div>
+            <div className="animate-fade-in" style={{ fontSize: '1.25rem', color: 'var(--text-muted)', fontWeight: 700, animationDelay: '0.2s' }}>+</div>
+            <div className="animate-dice-land" style={{ fontSize: '2.75rem', animationDelay: '0.1s' }}>{DICE_FACES[die2]}</div>
+            <div className="animate-fade-in" style={{ fontSize: '1.25rem', color: 'var(--text-muted)', fontWeight: 700, animationDelay: '0.3s' }}>=</div>
+            <div className="animate-result" style={{
               fontSize: '1.75rem',
               fontWeight: 800,
               color: 'var(--accent-gold)',
               fontFamily: 'var(--font-heading)',
               fontVariantNumeric: 'tabular-nums',
+              textShadow: '0 0 16px oklch(78% 0.16 85 / 0.4)',
+              animationDelay: '0.35s',
             }}>{resultSum}</div>
           </div>
         ) : (

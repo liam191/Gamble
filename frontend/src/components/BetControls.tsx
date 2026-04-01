@@ -131,20 +131,20 @@ export function BetControls({
 
       {/* Result message */}
       {state === 'won' && (
-        <div className="animate-result" style={{
+        <div className="animate-win-burst" style={{
           textAlign: 'center',
           color: 'var(--win)',
           fontWeight: 800,
-          fontSize: '1.25rem',
+          fontSize: '1.35rem',
           fontFamily: 'var(--font-heading)',
-          textShadow: '0 0 24px oklch(72% 0.18 155 / 0.5)',
-          letterSpacing: '0.04em',
+          textShadow: '0 0 30px oklch(72% 0.18 155 / 0.6)',
+          letterSpacing: '0.06em',
         }}>
           You won!
         </div>
       )}
       {state === 'lost' && (
-        <div className="animate-result" style={{
+        <div className="animate-lose-shake" style={{
           textAlign: 'center',
           color: 'var(--lose)',
           fontWeight: 700,
@@ -160,18 +160,24 @@ export function BetControls({
       <button
         onClick={onPlaceBet}
         disabled={!canBet || isActive}
-        className={isActive ? 'animate-pulse-glow' : ''}
+        className={
+          state === 'won' ? 'animate-win-ring' :
+          state === 'lost' ? '' :
+          isActive ? 'animate-pulse-glow' : ''
+        }
         style={getButtonStyle()}
         onMouseOver={(e) => {
           if (canBet && !isActive) {
-            e.currentTarget.style.background = 'var(--action-hover)'
-            e.currentTarget.style.transform = 'translateY(-1px)'
+            e.currentTarget.style.background = 'linear-gradient(180deg, oklch(68% 0.22 265) 0%, var(--action-hover) 100%)'
+            e.currentTarget.style.transform = 'translateY(-2px)'
+            e.currentTarget.style.boxShadow = '0 6px 24px oklch(58% 0.18 265 / 0.4)'
           }
         }}
         onMouseOut={(e) => {
           if (canBet && !isActive) {
-            e.currentTarget.style.background = 'var(--action)'
+            e.currentTarget.style.background = 'linear-gradient(180deg, var(--action-hover) 0%, var(--action) 100%)'
             e.currentTarget.style.transform = 'translateY(0)'
+            e.currentTarget.style.boxShadow = '0 4px 16px oklch(58% 0.18 265 / 0.3)'
           }
         }}
       >
