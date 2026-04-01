@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* ── Design Tokens ── */
+
+:root {
+  /* Indigo-tinted neutrals (casino ambiance) */
+  --surface-0: oklch(8% 0.02 270);
+  --surface-1: oklch(12% 0.02 270);
+  --surface-2: oklch(16% 0.02 270);
+  --surface-3: oklch(20% 0.025 270);
+  --surface-4: oklch(25% 0.02 270);
+
+  --text-primary: oklch(93% 0.01 270);
+  --text-secondary: oklch(70% 0.015 270);
+  --text-muted: oklch(50% 0.015 270);
+
+  /* Casino accent palette */
+  --accent-gold: oklch(78% 0.16 85);
+  --accent-gold-dim: oklch(60% 0.12 85);
+  --accent-gold-bright: oklch(88% 0.14 85);
+
+  --felt-green: oklch(35% 0.08 155);
+  --felt-green-subtle: oklch(20% 0.04 155);
+
+  --win: oklch(72% 0.18 155);
+  --win-dim: oklch(55% 0.12 155);
+  --lose: oklch(62% 0.2 25);
+  --lose-dim: oklch(45% 0.14 25);
+
+  --action: oklch(58% 0.18 265);
+  --action-hover: oklch(65% 0.2 265);
+
+  /* Spacing scale (4pt base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radius scale */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px oklch(0% 0 0 / 0.3), 0 0 1px oklch(0% 0 0 / 0.2);
+  --shadow-elevated: 0 8px 32px oklch(0% 0 0 / 0.4), 0 0 1px oklch(0% 0 0 / 0.3);
+  --shadow-gold: 0 0 24px oklch(78% 0.16 85 / 0.15);
+}
+
+@theme inline {
+  --color-background: var(--surface-0);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-plus-jakarta-sans), system-ui, sans-serif;
+  --font-heading: var(--font-outfit), system-ui, sans-serif;
+}
+
+body {
+  background: var(--surface-0);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Utility Classes ── */
+
+/* Smooth transitions — replace bounce/spin with intentional motion */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-scale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes gentle-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px oklch(78% 0.16 85 / 0.2); }
+  50% { box-shadow: 0 0 24px oklch(78% 0.16 85 / 0.4); }
+}
+
+@keyframes result-reveal {
+  0% { transform: scale(0.8); opacity: 0; }
+  60% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-result {
+  animation: result-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.animate-gentle-spin {
+  animation: gentle-spin 1.5s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-4);
+  border-radius: 3px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

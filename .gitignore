@@ -1,0 +1,24 @@
+# Foundry
+out/
+cache/
+broadcast/
+
+# Backend
+backend/dealer
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/.env*
+
+# Redis
+dump.rdb
+
+# Logs
+logs/casino.log
+logs/casino_logger.py
+
+# OS
+.DS_Store
+.env
+
