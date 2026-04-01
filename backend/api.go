@@ -7,6 +7,7 @@ import (
 	"math/big"
 	"net"
 	"net/http"
+	"strings"
 	"sync/atomic"
 	"strconv"
 	"sync"
@@ -88,10 +89,22 @@ func (a *API) handleCommit(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-store")
 	w.Header().Set("Content-Type", "application/json")
 
-	// Rate limit — extract IP without port, ignore spoofable headers
-	ip, _, _ := net.SplitHostPort(r.RemoteAddr)
+	// Rate limit — Cloud Run sets X-Forwarded-For with verified client IP as first entry.
+	// Fall back to RemoteAddr for non-proxied environments (local dev).
+	ip := ""
+	if xff := r.Header.Get("X-Forwarded-For"); xff != "" {
+		// First IP in X-Forwarded-For is the actual client (set by Cloud Run, not spoofable)
+		if idx := strings.Index(xff, ","); idx != -1 {
+			ip = strings.TrimSpace(xff[:idx])
+		} else {
+			ip = strings.TrimSpace(xff)
+		}
+	}
 	if ip == "" {
-		ip = r.RemoteAddr
+		ip, _, _ = net.SplitHostPort(r.RemoteAddr)
+		if ip == "" {
+			ip = r.RemoteAddr
+		}
 	}
 	if !a.limiter.Allow(ip) {
 		jsonError(w, "rate limit exceeded (10 req/min)", http.StatusTooManyRequests)

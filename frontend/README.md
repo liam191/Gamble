@@ -343,7 +343,7 @@ const config = createConfig({
 
 ```
 # Required
-NEXT_PUBLIC_CASINO_ADDRESS=0xb7b8a13744fa208fb67D7994B5a31113E93e063E
+NEXT_PUBLIC_CASINO_ADDRESS=0x2F3CBbc416B7a44BE58e72e0117DED6b3Ce84307
 NEXT_PUBLIC_API_URL=https://your-gcp-domain.com    # local: http://localhost:8080
 
 # Optional (defaults)
